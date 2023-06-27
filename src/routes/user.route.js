@@ -3,17 +3,16 @@ const {
   create,
   remove,
   update,
-} = require("../controllers/controllerFile")
+  login,
+} = require("../controllers/user.controllers")
 const express = require("express")
+const verifyJWT = require("../utils/verifyJWT")
 
-const routerName = express.Router()
+const routerUser = express.Router()
 
-routerName.route("/").get(getAll).post(create)
+routerUser.route("/").get(verifyJWT, getAll).post(create)
+routerUser.route("/login").post(login)
 
-routerName
-  .route("/:id")
+routerUser.route("/:id").delete(verifyJWT, remove).put(verifyJWT, update)
 
-  .delete(remove)
-  .put(update)
-
-module.exports = routerName
+module.exports = routerUser
