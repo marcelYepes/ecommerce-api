@@ -43,10 +43,10 @@ const setImages = catchError(async (req, res) => {
   const {id} = req.params
   const product = await Product.findByPk(id)
 
-  product.setProductImgs([req.body])
-  const images = product.getProductImgs()
+  await product.setProductImgs(req.body)
+  const images = await product.getProductImgs()
 
-  return res.json({message: "success"})
+  return res.json(images)
 })
 
 module.exports = {
